@@ -1,40 +1,42 @@
 <?php
-        $validInput= true;
-        //check status code
-        if (isset($_POST['statusCode']))
+        //check status code format
+        function check_status_code_format($str)
         {
-          $str= $_POST['statusCode'];
           $pattern= "/^S[0-9][0-9][0-9][0-9]$/";
           if (preg_match($pattern, $str))
           {
             echo "<p>the status code is ", $str, ".</p>";
+            return true;
           }
           else
           {
             echo "<p>Please enter a string start with S uppercase followed by 4 numbers.</p>";
+            return false;
           }
         }
-        else
+
+        //check status format
+        function check_status_format($str)
         {
-          echo "<p>Please enter string from the input form.</p>";
-        }
-        //check status
-        if (isset($_POST['status']))
-        {
-          $str= $_POST['status'];
           $str= trim($str, " ");
           $pattern= "/^[A-Za-z0-9,.!? ]+$/";
           if (preg_match($pattern, $str))
           {
             echo "<p>the status is ", $str, ".</p>";
+            return true;
           }
           else
           {
             echo "<p>Status can only contain alphanumeric character, spaces, comma, period, exclamation point and question mark</p>";
+            return false;
           }
         }
-        else
-        {
-          echo "<p>Please enter string from the input form.</p>";
-        }
+
+
+
+        //check status
+        $statusCode= $_POST['statusCode'];
+        $status= $_POST['status'];
+        $checkStatusCodeFormat=check_status_code_format($statusCode);
+        $checkStatusFormat=check_status_format($status);
 ?>

@@ -17,7 +17,7 @@
       <input type="radio" name="share" value="Friends"> Friends
       <input type="radio" name="share" value="Only Me"> Only Me
 
-    <p>Date :  <input type="date" value="<?php echo $today;?>"></p>
+    <p>Date :  <input type="date" name="date" value="<?php echo $today;?>"></p>
 
       <input type="checkbox" name="allowLike" value="Allow Like">Allow Like
       <input type="checkbox" name="allowComment" value="Allow Comment">Allow Comment

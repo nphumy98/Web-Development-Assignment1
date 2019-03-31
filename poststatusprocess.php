@@ -4,6 +4,13 @@
         //check status code format
         function check_status_code_format($statusCode)
         {
+          //check if statuscode is null
+          // if (isset($statusCode))
+          // {
+          //   echo "<p>Please enter Status Code field</p>";
+          //   return false;
+          // }
+          //check if it match the pattern
           $pattern= "/^S[0-9][0-9][0-9][0-9]$/";
           if (preg_match($pattern, $statusCode))
           {
@@ -20,7 +27,14 @@
         //check status format
         function check_status_format($status)
         {
+          //check if it match the pattern
           $status= trim($status, " ");
+          //check if statuscode is empty
+          if (empty($status))
+          {
+            echo "<p>Please enter Status field</p>";
+            return false;
+          }
           $pattern= "/^[A-Za-z0-9,.!? ]+$/";
           if (preg_match($pattern, $status))
           {
@@ -34,9 +48,34 @@
           }
         }
         //check status code is unique
-        function is_status_code_unique($statusCode)
+        function is_status_code_unique($statusCode, $sql_tble, $conn)
         {
+          $query = "select * from $sql_tble where status_code = '$statusCode'";
+          // executes the query
+          echo $query;
+      		$result = mysqli_query($conn, $query);
+          $rowCount= mysqli_num_rows($result);
+          //if the status code already in the table
+          if ( $rowCount== 0)
+          {
+            echo "<p>The Status Code not in the table. the row count is ", $rowCount,"</p>";
+              return true;
+          }
+          else
+          {
+            echo "<p>The Status Code already in the table. Please choose another status code</p>";
+            return false;
+          }
+        }
 
+        //to return the string for checkbox Allow Like, Allow Comment and Allow share
+        function check_boolean_value($str)
+        {
+          if ($str!="Yes")
+          {
+            $str="No";
+          }
+          return $str;
         }
 
         //check status
@@ -44,35 +83,10 @@
         $status= $_POST['status'];
         $share= $_POST['share'];
         $post_date = $_POST['date'];
-        $allowLike= $_POST['allowLike'];
-        $allowComment= $_POST['allowComment'];
-        $allowShare= $_POST['allowShare'];
-        if ($allowLike != "Allow Like")
-        {
-          $allowLike=0;
-        }
-        else
-        {
-          $allowLike=1;
-        }
+        $allowLike= check_boolean_value($_POST['allowLike']);
+        $allowComment= check_boolean_value($_POST['allowComment']);
+        $allowShare= check_boolean_value($_POST['allowShare']);
 
-        if ($allowComment != "Allow Comment")
-        {
-          $allowComment=0;
-        }
-        else
-        {
-          $allowComment=1;
-        }
-
-        if ($allowShare != "Allow Share")
-        {
-          $allowShare=0;
-        }
-        else
-        {
-          $allowShare=1;
-        }
 
         check_status_code_format($statusCode);
         check_status_format($status);
@@ -100,11 +114,13 @@
         else
         {
           echo "<p>Database connection sucess</p>";
+          //check the status code if it is unique
+          is_status_code_unique($statusCode, $sql_tble, $conn);
       		// Set up the SQL command to add the data into the table
       		$query = "insert into $sql_tble"
       						."(status_code, status, share, post_date, allow_like, allow_comment, allow_share)"
       					. "values"
-      						."('$statusCode','$status','$share', '$post_date',$allowLike,$allowComment,$allowShare)";
+      						."('$statusCode','$status','$share', '$post_date','$allowLike','$allowComment','$allowShare')";
         echo $query;
       		// executes the query
       		$result = mysqli_query($conn, $query);

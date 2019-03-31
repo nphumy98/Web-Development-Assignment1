@@ -19,9 +19,9 @@
 
     <p>Date :  <input type="date" name="date" value="<?php echo $today;?>"></p>
 
-      <input type="checkbox" name="allowLike" value="Allow Like">Allow Like
-      <input type="checkbox" name="allowComment" value="Allow Comment">Allow Comment
-      <input type="checkbox" name="allowShare" value="Allow Share">Allow Share
+      <input type="checkbox" name="allowLike" value="Yes">Allow Like
+      <input type="checkbox" name="allowComment" value="Yes">Allow Comment
+      <input type="checkbox" name="allowShare" value="Yes">Allow Share
 
     <input type="submit" value="Post"/>
     <input type="reset" value="Reset"/>

@@ -1,3 +1,4 @@
+/* make the a tag remove symbol _  */
 a {
   text-decoration: none;
 }
@@ -21,10 +22,22 @@ form
     text-align: left;
 }
 
+/* make each label input in different line */
 label {
   display: block;
 }
 
+/* make table at center */
+table {
+  margin: auto;
+}
+
+/* make all paragraph text center */
+p {
+  text-align: center;
+}
+
+/* make the container div center and background color to white */
 #container {
   background-color: white;
   margin: auto;
@@ -39,23 +52,29 @@ label {
   padding: 5px;
 }
 
+/* make the option_nav class to the left */
 #option_navigation {
   float: left;
   text-align: left;
 }
 
+/* remove the list bullet point */
 #option_navigation ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* make the personal_information class to the right */
 #personal_information {
   float: right;
   width: 1300px;
 }
 
+/* set up style for all submit button */
 #submit_button, #reset_button {
+  /* set text color to white */
   color: #fff;
+  /* set background color to blue */
   background-color: #0069ff;
   width: 150px;
   height: 30px;

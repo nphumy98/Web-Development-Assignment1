@@ -13,7 +13,7 @@
       $status= $_GET['status'];
       if(!isset($status) || trim($status) == '')
       {
-         echo "You did not fill out the status field.";
+         echo "<p>You did not fill out the status field.</p>";
          return false;
       }
       return true;

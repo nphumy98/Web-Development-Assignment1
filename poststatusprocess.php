@@ -157,10 +157,10 @@
               // close the database connection
               mysqli_close($conn);
             }
-            //link to homepage and poststatusform
-            echo "<p><a href="."poststatusform.php".">Add another Status</a>"."</p>";
-            echo "<p><a href="."index.html".">Return to Home Page</a>"."</p>";
           }
   ?>
+  <!-- link to homepage and poststatusform -->
+  <p><a href="poststatusform.php">Add another Status</a></p>;
+  <p><a href="index.html">Return to Home Page</a></p>;
 </body>
 </html>

@@ -1,3 +1,65 @@
+a {
+  text-decoration: none;
+}
+
 h1 {
-  color: red;
+ /* to make the content container closer to the t */
+  margin:0;
+}
+
+/* to make the form in center */
+div.form
+{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+label {
+  display: block;
+}
+
+#container {
+  background-color: white;
+  margin: auto;
+}
+
+#header {
+  background-color: #66CCFF;
+  text-align: center;
+}
+
+#content {
+  padding: 5px;
+}
+
+#option_navigation {
+  float: left;
+  text-align: left;
+}
+
+#option_navigation ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#personal_information {
+  float: right;
+  width: 1300px;
+}
+
+#submit_button, #reset_button {
+  color: #fff;
+  background-color: #0069ff;
+  width: 150px;
+  height: 30px;
+  /* make the edge look round */
+  border-radius: 10%;
+  text-transform: uppercase;
 }

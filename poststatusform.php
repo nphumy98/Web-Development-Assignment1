@@ -24,7 +24,7 @@
         <input type="text" name="status" required>
         <p></p>
 
-          <input type="radio" name="share" value="Public" checked> Public
+          <input type="radio" name="share" value="Public"> Public
           <input type="radio" name="share" value="Friends"> Friends
           <input type="radio" name="share" value="Only Me"> Only Me
 

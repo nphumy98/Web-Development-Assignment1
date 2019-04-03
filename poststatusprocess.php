@@ -85,6 +85,30 @@
             return $str;
           }
 
+
+          //function to check if the table is existed in the database, if not create new table
+          function check_table_existed ($conn, $sql_tble)
+          {
+            //check if the table is exsit
+            $query_check_table = "DESCRIBE $sql_tble";
+            //if the table not exist
+            if(mysqli_query($conn,$query_check_table)==false)
+            {
+              //create a status post table
+              $query_create_table= "CREATE TABLE $sql_tble (
+              status_code VARCHAR(6) NOT NULL PRIMARY KEY,
+              status VARCHAR(30) NOT NULL,
+              share enum('Public','Friends','Only Me'),
+              post_date DATE,
+              allow_like enum('Yes','No') NOT NULL DEFAULT 'No',
+              allow_comment enum('Yes','No') NOT NULL DEFAULT 'No',
+              allow_share enum('Yes','No') NOT NULL DEFAULT 'No'
+              )";
+
+              //execute the $query
+              mysqli_query($conn, $query_create_table);
+            }
+          }
           //check status
           $statusCode= $_POST['statusCode'];
           $status= $_POST['status'];
@@ -123,36 +147,28 @@
             }
             else
             {
-              echo "<p>Database connection sucess</p>";
-              //check if the table is exsit
-              $query_check_table = "DESCRIBE $sql_tble";
-              //if the table exist
-              if(mysqli_query($conn,$query_check_table)!=false)
+              //check table existed, if not create new table
+              check_table_existed ($conn, $sql_tble);
+
+              //check the status code if it is unique
+              //if status code is unique
+              $is_status_code_unique=is_status_code_unique($statusCode, $sql_tble, $conn);
+              if($is_status_code_unique)
               {
-                //check the status code if it is unique
-                //if status code is unique
-                $is_status_code_unique=is_status_code_unique($statusCode, $sql_tble, $conn);
-                if($is_status_code_unique)
-                {
-                  // Set up the SQL command to add the data into the table
-                 $query_insert = "insert into $sql_tble"
-                         ."(status_code, status, share, post_date, allow_like, allow_comment, allow_share)"
-                       . "values"
-                         ."('$statusCode','$status','$share', '$post_date','$allowLike','$allowComment','$allowShare')";
-                 // executes the query
-                 $result = mysqli_query($conn, $query_insert);
-                 // checks if the execution was successful
-                 if(!$result) {
-                   echo "<p>Something is wrong with ",	$query_insert, "</p>";
-                 } else {
-                   // display an operation successful message
-                   echo "<p>Success add</p>";
-                 } // if successful query operation
-                }
-              }
-              else
-              {
-                echo "<p>The table: ",	$sql_tble, " is not existed</p>";
+                // Set up the SQL command to add the data into the table
+               $query_insert = "insert into $sql_tble"
+                       ."(status_code, status, share, post_date, allow_like, allow_comment, allow_share)"
+                     . "values"
+                       ."('$statusCode','$status','$share', '$post_date','$allowLike','$allowComment','$allowShare')";
+               // executes the query
+               $result = mysqli_query($conn, $query_insert);
+               // checks if the execution was successful
+               if(!$result) {
+                 echo "<p>Something is wrong with ",	$query_insert, "</p>";
+               } else {
+                 // display an operation successful message
+                 echo "<p>Success add</p>";
+               } // if successful query operation
               }
               // close the database connection
               mysqli_close($conn);

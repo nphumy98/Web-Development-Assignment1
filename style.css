@@ -36,6 +36,16 @@ table {
 p {
   text-align: center;
 }
+/* make the text in p of about.html align left */
+p.answer {
+  text-align: left;
+  color: blue;
+}
+
+/* set color for question h in about html */
+h3.question {
+  color: red;
+}
 
 /* make the container div center and background color to white */
 #container {

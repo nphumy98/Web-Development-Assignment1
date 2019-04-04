@@ -11,6 +11,7 @@
     </div>
 
     <?php
+    //set the date default to NZ
       date_default_timezone_set('NZ');
       $today = date('Y-m-d');
     ?>

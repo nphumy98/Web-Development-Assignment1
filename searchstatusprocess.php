@@ -43,7 +43,9 @@
 
         //execute the $query
         mysqli_query($conn, $query_create_table);
+        return false;
       }
+      return true;
     }
     //connect to database
   	$conn = @mysqli_connect($sql_host,
@@ -61,7 +63,11 @@
     {
   		// Upon successful connection
       //check table existed, if not create new table
-       check_table_existed ($conn, $sql_tble);
+      //if table not existed
+       if(!check_table_existed ($conn, $sql_tble));
+       {
+         echo "<p>The table was not existed before.  New table has been created. Please add status</p>";
+       }
       //check if the status string is null or empty
       if(check_input_empty())
       {

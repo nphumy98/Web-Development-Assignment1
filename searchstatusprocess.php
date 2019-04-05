@@ -43,6 +43,8 @@
 
         //execute the $query
         mysqli_query($conn, $query_create_table);
+        // message to inform table has been created
+        echo "<p>The table was not existed before.  New table has been created. Please add more status</p>";
         return false;
       }
       return true;
@@ -64,10 +66,8 @@
   		// Upon successful connection
       //check table existed, if not create new table
       //if table not existed
-       if(!check_table_existed ($conn, $sql_tble));
-       {
-         echo "<p>The table was not existed before.  New table has been created. Please add status</p>";
-       }
+       check_table_existed ($conn, $sql_tble);
+
       //check if the status string is null or empty
       if(check_input_empty())
       {

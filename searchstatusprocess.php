@@ -8,6 +8,9 @@
     <h1>Status Posting System</h1>
   </div>
   <?php
+  //get config file for database
+    require_once('../config-assign1/databaseInfo.inc.php');
+    //function to check if input is empty
     function check_input_empty()
     {
       $status= $_GET['status'];
@@ -42,14 +45,7 @@
         mysqli_query($conn, $query_create_table);
       }
     }
-
-    $sql_host="localhost";
-    $sql_user="wrk2544";
-    $sql_pass="6889hong";
-    $sql_db="wrk2544";
-    $sql_tble="status_post";
-    // The @ operator suppresses the display of any error messages
-  	// mysqli_connect returns false if connection failed, otherwise a connection value
+    //connect to database
   	$conn = @mysqli_connect($sql_host,
   		$sql_user,
   		$sql_pass,
@@ -73,8 +69,6 @@
         $status= $_GET['status'];
 
         // Set up the SQL command to retrieve the data from the table
-        // % symbol represent a wildcard to match any characters
-        // like is a compairson operator
         $query = "select * from $sql_tble where status like '%$status%'";
 
         // executes the query and store result into the result pointer
@@ -82,7 +76,8 @@
         // checks if the execuion was successful
         if(!$result)
         {
-          echo "<p>Something is wrong with ",	$query, "</p>";
+          //if excute query not sucess. tell user try another time later
+          echo "<p>Due to some reasons, your status has not been added. Try again later!</p>";;
         }
         else
         {
@@ -97,10 +92,7 @@
              ."<th scope=\"col\">Allow Comment</th>\n"
              ."<th scope=\"col\">Allow Share</th>\n"
              ."</tr>\n";
-          // retrieve current record pointed by the result pointer
-          // Note the = is used to assign the record value to variable $row, this is not an error
-          // the ($row = mysqli_fetch_assoc($result)) operation results to false if no record was retrieved
-          // _assoc is used instead of _row, so field name can be used
+          //loop through database
           while ($row = mysqli_fetch_assoc($result))
           {
             //fix format for post date
@@ -130,7 +122,7 @@
           echo "</table>";
           // Frees up the memory, after using the result pointer
           mysqli_free_result($result);
-        } // if successful query operation
+        }
        }
       // close the database connection
   		mysqli_close($conn);

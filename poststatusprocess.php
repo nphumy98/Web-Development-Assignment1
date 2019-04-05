@@ -9,26 +9,19 @@
   </div>
   <?php
           //get config file for database
-         // require_once('../../config-assign1/databaseInfo.inc.php');
+          require_once('../config-assign1/databaseInfo.inc.php');
           //check status code format
           function check_status_code_format($statusCode)
           {
-            //check if statuscode is null
-            // if (isset($statusCode))
-            // {
-            //   echo "<p>Please enter Status Code field</p>";
-            //   return false;
-            // }
             //check if it match the pattern
             $pattern= "/^S[0-9][0-9][0-9][0-9]$/";
             if (preg_match($pattern, $statusCode))
             {
-              echo "<p>the status code is ", $statusCode, ".</p>";
               return true;
             }
             else
             {
-              echo "<p>Please enter a string start with S uppercase followed by 4 numbers.</p>";
+              echo "<p>$statusCode is invalid. Please enter Status Code with a string start with S uppercase followed by 4 numbers.</p>";
               return false;
             }
           }
@@ -47,12 +40,11 @@
             $pattern= "/^[A-Za-z0-9,.!? ]+$/";
             if (preg_match($pattern, $status))
             {
-              echo "<p>the status is ", $status, ".</p>";
               return true;
             }
             else
             {
-              echo "<p>Status can only contain alphanumeric character, spaces, comma, period, exclamation point and question mark</p>";
+              echo "<p>$status is invalid. Status can only contain alphanumeric character, spaces, comma, period, exclamation point and question mark</p>";
               return false;
             }
           }
@@ -70,7 +62,7 @@
             }
             else
             {
-              echo "<p>The Status Code already in the table. Please choose another status code</p>";
+              echo "<p>$statusCode is invalid. The Status Code already in the table. Please choose another status code</p>";
               return false;
             }
           }
@@ -109,7 +101,8 @@
               mysqli_query($conn, $query_create_table);
             }
           }
-          //check status
+
+          //get infor from fields
           $statusCode= $_POST['statusCode'];
           $status= $_POST['status'];
           $share= $_POST['share'];
@@ -124,14 +117,7 @@
 
           if(($statusCodeFormat)&&($statusFormat))
           {
-            //database infor
-            $sql_host="localhost";
-            $sql_user="wrk2544";
-            $sql_pass="6889hong";
-            $sql_db="wrk2544";
-            $sql_tble="status_post";
             // connect database
-            // The @ operator suppresses the display of any error messages
             // mysqli_connect returns false if connection failed, otherwise a connection value
             $conn = @mysqli_connect($sql_host,
               $sql_user,
@@ -143,7 +129,7 @@
             if (!$conn)
             {
               // Displays an error message
-              echo "<p>Database connection failure</p>";
+              echo "<p>Database connection failure. Try another time</p>";
             }
             else
             {
@@ -164,10 +150,11 @@
                $result = mysqli_query($conn, $query_insert);
                // checks if the execution was successful
                if(!$result) {
-                 echo "<p>Something is wrong with ",	$query_insert, "</p>";
+                 //if not then tell user to try another time
+                 echo "<p>Due to some reasons, your status has not been added. Try again later!</p>";
                } else {
                  // display an operation successful message
-                 echo "<p>Success add</p>";
+                 echo "<p>Your status with status code: $statusCode has been sucessfully added.</p>";
                } // if successful query operation
               }
               // close the database connection
